@@ -27,31 +27,66 @@
 ### Блок схема
 ![Блок схема алгоритма](lab9.png)
 ## 2. Реализация программы:
-	#include <locale.h>
-	#include <stdio.h>
-	#include <math.h>
+```
+#define _CRT_SECURE_NO_DEPRECATE
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-	int main() {
+void main()
+{
     setlocale(LC_ALL, "");
+    int continue_program;
 
-    double a, b, c, d, e, x, y;
+    do {
+        char symbol;
+        int r;
+        int i, j;
+        int size;
 
-    double z = 0.512;
-    y = -1.625 * pow(10, 3);
+        printf("Введите символ из которого будет строиться фигура: ");
+        scanf(" %c", &symbol);
 
-    printf("Введите x: ");
-    scanf("%lf", &x);           
+        printf("Введите радиус r: ");
+        scanf("%d", &r);
 
-    a = exp(x - 1 / sin(z));
-    b = pow(a, 1.0 / 3.0);
-    c = sqrt(x + pow(fabs(y), 1.0 / 4.0));
-    d = pow(2, -x);
-    e = b * c * d;
+        size = 2 * r;
 
-    printf("Ответ: %.5f", e);
+        printf("Квадрат с вписанной окружностью (r=%d):\n", r);
 
-    return 0;
-	}
+        for (i = 0; i <= size; i++)
+        {
+            for (j = 0; j <= size; j++)
+            {
+                int x = j - r;
+                int y = i - r;
+
+                int dist_sq = x * x + y * y;
+
+                int on_square = (i == 0 || i == size || j == 0 || j == size);
+
+                int on_circle = (dist_sq >= r * r - r && dist_sq <= r * r + r);
+
+                if (on_square || on_circle) {
+                    printf("%c", symbol);
+                }
+                else {
+                    printf(" ");
+                }
+            }
+            printf("\n");
+        }
+
+        printf("\nПродолжить? (Да - введите любое число. Нет - введите 0): ");
+        scanf("%d", &continue_program);
+        printf("\n");
+
+    } while (continue_program != 0);
+
+    printf("Программа завершена.\n");
+    system("pause");
+}
+```
 ## 3. Результат работы программы
 ![Результат работы программы](image.png)
 ## 4. Информация о разработчике
